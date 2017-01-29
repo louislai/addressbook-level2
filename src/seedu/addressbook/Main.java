@@ -107,7 +107,7 @@ public class Main {
         try {
             command.setData(addressBook, lastShownList);
             CommandResult result = command.execute();
-            storage.save(addressBook);
+            saveAddressBookToStorage();
             return result;
         } catch (Exception e) {
             ui.showToUser(e.getMessage());
@@ -125,5 +125,16 @@ public class Main {
         return isStorageFileSpecifiedByUser ? new StorageFile(launchArgs[0]) : new StorageFile();
     }
 
-
+    /**
+     * Save address book to storage. Show message to user if the storage file does not exists
+     * storage will automatically re-generate the file
+     * @throws StorageOperationException if there was an error saving file to storage
+     */
+    private void saveAddressBookToStorage() throws StorageOperationException {
+    	if (!storage.isFilePathExists()) {
+    		final String alertMessage = "Storage file is not found. A new storage file will be created!";
+    		ui.showToUser(alertMessage);
+    	}
+    	storage.save(addressBook);
+    }
 }
