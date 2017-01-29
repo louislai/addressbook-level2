@@ -1,11 +1,11 @@
 package seedu.addressbook.data.person;
 
 public class Block {
-	public final String value;
-	
-	public Block(String value) {
-		this.value = value;
-	}
+    public final String value;
+
+    public Block(String value) {
+        this.value = value;
+    }
 
     @Override
     public boolean equals(Object other) {
