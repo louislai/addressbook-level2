@@ -47,4 +47,9 @@ public class NameTest {
     public void isSimilar_namesWithSameWordsDifferentCase_arentSimilar() {
         assertFalse(name1.isSimilar(name3));
     }
+
+    @Test
+    public void isSimilar_differentNames_arentSimilar() {
+        assertFalse(name1.isSimilar(name4));
+    }
 }
