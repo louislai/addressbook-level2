@@ -2,14 +2,12 @@ package seedu.addressbook.data;
 
 import seedu.addressbook.data.person.*;
 import seedu.addressbook.data.person.UniquePersonList.*;
+import seedu.addressbook.data.tag.Tagging;
 import seedu.addressbook.data.tag.UniqueTagList;
 import seedu.addressbook.data.tag.UniqueTagList.*;
 import seedu.addressbook.data.tag.Tag;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Represents the entire address book. Contains the data of the address book.
@@ -22,6 +20,7 @@ public class AddressBook {
 
     private final UniquePersonList allPersons;
     private final UniqueTagList allTags; // can contain tags not attached to any person
+    private ArrayList<Tagging> allTaggings = new ArrayList<>();
 
     /**
      * Creates an empty address book.
@@ -123,6 +122,42 @@ public class AddressBook {
     }
 
     /**
+     * Add a tagging to the address book
+     *
+     * @param person
+     * @param tag
+     */
+    public void addTagging(Person person, Tag tag) {
+        if (!isValidTagging(person, tag)) {
+            return;
+        }
+
+        allTaggings.add(new Tagging(person, tag, Tagging.TaggingType.ADDING));
+    }
+
+    /**
+     * Remove a tagging from the address book
+     *
+     * @param person
+     * @param tag
+     */
+    public void removeTagging(Person person, Tag tag) {
+        if (!isValidTagging(person, tag)) {
+            return;
+        }
+
+        final long addTaggingCount = getTaggingCount(person, tag, Tagging.TaggingType.ADDING);
+        final long deleteTaggingCount = getTaggingCount(person, tag, Tagging.TaggingType.DELETING);
+
+        if (addTaggingCount <= deleteTaggingCount) {
+            return;
+        }
+
+        allTaggings.add(new Tagging(person, tag, Tagging.TaggingType.DELETING));
+    }
+
+
+    /**
      * Clears all persons and tags from the address book.
      */
     public void clear() {
@@ -150,5 +185,31 @@ public class AddressBook {
                 || (other instanceof AddressBook // instanceof handles nulls
                         && this.allPersons.equals(((AddressBook) other).allPersons)
                         && this.allTags.equals(((AddressBook) other).allTags));
+    }
+
+
+    /**
+     * Count number of add/delete tagging
+     * @param person
+     * @param tag
+     * @param type
+     */
+    private long getTaggingCount(Person person, Tag tag, Tagging.TaggingType type) {
+        final Tagging dummyTagging = new Tagging(person, tag, type);
+        return allTaggings
+                .stream()
+                .filter(tagging -> tagging == dummyTagging)
+                .count();
+    }
+
+    /**
+     * Check if a particular tagging is possible
+     *
+     * @param person
+     * @param tag
+     * @return
+     */
+    private boolean isValidTagging(Person person, Tag tag) {
+        return allTags.contains(tag) && allPersons.contains(person);
     }
 }
