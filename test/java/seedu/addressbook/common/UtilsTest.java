@@ -1,5 +1,6 @@
 package seedu.addressbook.common;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -7,6 +8,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Test;
+
+import seedu.addressbook.data.person.*;
 
 public class UtilsTest {
     @Test
@@ -60,6 +63,17 @@ public class UtilsTest {
         assertNotUnique(null, 1, new Integer(1));
         assertNotUnique(null, null);
         assertNotUnique(null, "a", "b", null);
+    }
+    
+    @Test
+    public void getPrintableString() throws Exception {
+        final Name name = new Name("John");
+        final Address address = new Address("NUS", true);
+        final Phone phone = new Phone("12345", true);
+        final Email email = new Email("a@gmail.com", true);
+        assertEquals(
+                Utils.getPrintableString(name, address, phone, email),
+                "Name: John, Address: NUS, Phone: 12345, Email: a@gmail.com");
     }
 
     private void assertAreUnique(Object... objects) {
