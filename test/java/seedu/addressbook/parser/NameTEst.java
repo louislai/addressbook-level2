@@ -42,4 +42,9 @@ public class NameTest {
     public void isSimilar_namesWithSameWords_areSimilar() {
         assertTrue(name1.isSimilar(name2));
     }
+
+    @Test
+    public void isSimilar_namesWithSameWordsDifferentCase_arentSimilar() {
+        assertFalse(name1.isSimilar(name3));
+    }
 }
