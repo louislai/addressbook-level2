@@ -10,28 +10,38 @@ import org.junit.Test;
 
 public class UtilsTest {
     @Test
-    public void isAnyNull() {
-        // empty list
+    public void isAnyNull_emptyList_returnFalse() {
         assertFalse(Utils.isAnyNull());
+    }
 
-        // Any non-empty list
+    @Test
+    public void isAnyNull_nonEmptyListNoNull_returnFalse() {
         assertFalse(Utils.isAnyNull(new Object(), new Object()));
         assertFalse(Utils.isAnyNull("test"));
         assertFalse(Utils.isAnyNull(""));
+    }
 
-        // non empty list with just one null at the beginning
+    @Test
+    public void isAnyNull_nonEmptyListOneNullAtBeginning_returnTrue() {
         assertTrue(Utils.isAnyNull((Object) null));
         assertTrue(Utils.isAnyNull(null, "", new Object()));
         assertTrue(Utils.isAnyNull(null, new Object(), new Object()));
+    }
 
-        // non empty list with nulls in the middle
+    @Test
+    public void isAnyNull_nonEmptyListOneNullInMiddle_returnTrue() {
         assertTrue(Utils.isAnyNull(new Object(), null, null, "test"));
         assertTrue(Utils.isAnyNull("", null, new Object()));
+    }
 
-        // non empty list with one null as the last element
+    @Test
+    public void isAnyNull_nonEmptyListOneNullAtLast_returnTrue() {
         assertTrue(Utils.isAnyNull("", new Object(), null));
         assertTrue(Utils.isAnyNull(new Object(), new Object(), null));
+    }
 
+    @Test
+    public void isAnyNull_nullInsideList_returnFalse() {
         // confirms nulls inside the list are not considered
         List<Object> nullList = Arrays.asList((Object) null);
         assertFalse(Utils.isAnyNull(nullList));
