@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * Represents a Person's name in the address book.
- * Guarantees: immutable; is valid as declared in {@link #isValidName(String)}
+ * Guarantees: immutable; is valid as declared in {@link #isValid(String)}
  */
 public class Name {
 
@@ -23,7 +23,7 @@ public class Name {
      */
     public Name(String name) throws IllegalValueException {
         String trimmedName = name.trim();
-        if (!isValidName(trimmedName)) {
+        if (!isValid(trimmedName)) {
             throw new IllegalValueException(MESSAGE_NAME_CONSTRAINTS);
         }
         this.fullName = trimmedName;
@@ -32,7 +32,7 @@ public class Name {
     /**
      * Returns true if a given string is a valid person name.
      */
-    public static boolean isValidName(String test) {
+    public static boolean isValid(String test) {
         return test.matches(NAME_VALIDATION_REGEX);
     }
 
