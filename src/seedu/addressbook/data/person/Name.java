@@ -3,6 +3,7 @@ package seedu.addressbook.data.person;
 import seedu.addressbook.data.exception.IllegalValueException;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -66,7 +67,17 @@ public class Name {
             return false;
         }
 
-        return false;
+        final HashMap<String, Integer> bagOfWords = getBagOfWords();
+        final HashMap<String, Integer> otherBagOfWords = other.getBagOfWords();
+
+        for (String key: bagOfWords.keySet()) {
+            if (!otherBagOfWords.containsKey(key)
+                || bagOfWords.get(key) != otherBagOfWords.get(key)) {
+                return false;
+            }
+        }
+
+        return bagOfWords.keySet().size() == otherBagOfWords.keySet().size();
     }
 
     @Override
@@ -84,6 +95,25 @@ public class Name {
     @Override
     public int hashCode() {
         return fullName.hashCode();
+    }
+
+    /**
+     * Return the dictionary with the frequency of each word in the name
+     * @return
+     */
+    public HashMap<String, Integer> getBagOfWords() {
+        String[] words = fullName.split(" ");
+        HashMap<String, Integer> wordCount = new HashMap<>();
+
+        for (String word: words) {
+            if (wordCount.get(word) != null) {
+                wordCount.put(word, wordCount.get(word) + 1);
+            } else {
+                wordCount.put(word, 1);
+            }
+        }
+
+        return wordCount;
     }
 
 }

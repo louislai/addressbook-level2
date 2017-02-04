@@ -37,4 +37,9 @@ public class NameTest {
     public void isSimilar_equalNames_areSimilar() {
         assertTrue(name1.isSimilar(name1));
     }
+
+    @Test
+    public void isSimilar_namesWithSameWords_areSimilar() {
+        assertTrue(name1.isSimilar(name2));
+    }
 }
