@@ -43,6 +43,24 @@ public class Name {
         return Arrays.asList(fullName.split("\\s+"));
     }
 
+    /**
+     * Returns true of the other name is very similar to this name.
+     * Two names are considered similar if:
+     * - Either they are equal or
+     * - If they are unequal, each (case-sensitive) word appears the same
+     * number of times in the two names
+     *
+     * e.g:
+     * this word: "John Brown"
+     * other word: "Brown John"
+     * They are similar because "Brown" & "John" each appear 1 time in each name.
+     *
+     * @param other
+     */
+    public boolean isSimilar(Name other) {
+        return false;
+    }
+
     @Override
     public String toString() {
         return fullName;
