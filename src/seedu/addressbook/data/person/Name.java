@@ -58,6 +58,14 @@ public class Name {
      * @param other
      */
     public boolean isSimilar(Name other) {
+        if (equals(other)) {
+            return true;
+        }
+
+        if (other == null) {
+            return false;
+        }
+
         return false;
     }
 

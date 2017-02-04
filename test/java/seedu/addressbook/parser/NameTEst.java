@@ -32,4 +32,9 @@ public class NameTest {
     public void isSimilar_nameAndNull_areNotSimilar() {
         assertFalse(name1.isSimilar(null));
     }
+
+    @Test
+    public void isSimilar_equalNames_areSimilar() {
+        assertTrue(name1.isSimilar(name1));
+    }
 }
