@@ -48,21 +48,26 @@ public class UtilsTest {
     }
 
     @Test
-    public void elementsAreUnique() throws Exception {
-        // empty list
+    public void elementsAreUnique_emptyList_areUnique() {
         assertAreUnique();
+    }
 
-        // only one object
+    @Test
+    public void elementsAreUnique_oneObject_areUnique() {
         assertAreUnique((Object) null);
         assertAreUnique(1);
         assertAreUnique("");
         assertAreUnique("abc");
+    }
 
-        // all objects unique
+    @Test
+    public void elementsAreUnique_multipleDifferentObjects_areUnique() {
         assertAreUnique("abc", "ab", "a");
         assertAreUnique(1, 2);
+    }
 
-        // some identical objects
+    @Test
+    public void elementsAreUnique_someIdenticalObjects_arentUnique() {
         assertNotUnique("abc", "abc");
         assertNotUnique("abc", "", "abc", "ABC");
         assertNotUnique("", "abc", "a", "abc");
